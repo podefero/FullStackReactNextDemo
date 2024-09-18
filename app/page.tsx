@@ -1,10 +1,11 @@
+"use client"; //to allow events. Keep things simple for demo
+//in future use api, hoooks or form submissions to preserve server side rendering
+
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Hero } from "@/components/ui/hero";
-import Image from 'next/image';
-
+import { Hero } from "@/components/ui/composites/hero";
+import ProductCard from "@/components/ui/composites/product_card";
 
 export default function HomePage() {
   return (
@@ -18,23 +19,13 @@ export default function HomePage() {
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Product Card */}
-          <Card className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow">
-          <Image
-            src="/products/idea.svg"
-            alt="Product 1"
-            width={500} // Set the desired width
-            height={192} // Set the desired height
-            className="w-full h-48 object-cover rounded-lg"
-          />
-            <div className="mt-4">
-              <h3 className="text-lg font-medium text-gray-800">Product 1</h3>
-              <p className="mt-2 text-gray-600">$99.99</p>
-              <Button className="mt-4 bg-green-600 text-white px-4 py-2 rounded-md">
-                Add to Cart
-              </Button>
-            </div>
-          </Card>
-          
+          <ProductCard
+            imageSrc="/products/idea.svg"
+            imageAlt="Product 1"
+            productName="Product 1"
+            productPrice="$99.99"
+            onAddToCart={() => console.log("Added to cart")}
+          ></ProductCard>
           {/* You can duplicate this product card for more products */}
         </div>
       </section>
