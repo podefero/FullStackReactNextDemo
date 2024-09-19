@@ -1,6 +1,7 @@
 import React from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { ProductModel } from "@/components/model/product_model";
 import Image from "next/image";
 
 interface ProductCardProps {
@@ -8,11 +9,14 @@ interface ProductCardProps {
   imageAlt: string;
   productName: string;
   productPrice: string;
-  onAddToCart: () => void; //stub for add cart button
+  onAddToCart: (prodct: ProductModel) => void; 
 }
 
 const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
   ({ imageSrc, imageAlt, productName, productPrice, onAddToCart }, ref) => {
+    const product: ProductModel = {
+        productName, productPrice: parseFloat(productPrice), img: imageSrc,
+    }
     return (
       <Card
         ref={ref}
@@ -30,7 +34,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
           <p className="mt-2 text-gray-600">{productPrice}</p>
           <Button
             className="mt-4 bg-green-600 text-white px-4 py-2 rounded-md"
-            onClick={onAddToCart}
+            onClick={() => onAddToCart(product)}
           >
             Add to Cart
           </Button>

@@ -1,17 +1,46 @@
 "use client"; //to allow events. Keep things simple for demo
 //in future use api, hoooks or form submissions to preserve server side rendering
-
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Hero } from "@/components/ui/composites/hero";
+import Cart from "@/components/ui/composites/shopping_cart_element";
 import ProductCard from "@/components/ui/composites/product_card";
+import { ProductModel } from "@/components/model/product_model";
 
 export default function HomePage() {
+  const [cartProducts, setCartProducts] = useState<ProductModel[]>([]); // Cart state
+
+  // Load cart from localStorage when the component mounts
+  useEffect(() => {
+    const savedCart = localStorage.getItem("cartProducts");
+    if (savedCart) {
+      setCartProducts(JSON.parse(savedCart));
+    }
+
+  }, []);
+
+  // Save cart to localStorage whenever the cart changes
+  useEffect(() => {
+    localStorage.setItem("cartProducts", JSON.stringify(cartProducts));
+
+  }, [cartProducts]);
+
+  // Function to handle adding products to the cart
+  const handleAddToCart = (product: ProductModel) => {
+    setCartProducts([...cartProducts, product]); // Add product to cart
+
+  };
+
   return (
     <div className="min-h-screen bg-gray-100">
+      {/* Cart Icon */}
+      <Cart itemCount={cartProducts.length} products={cartProducts} />
+
       {/* Hero Section */}
       <Hero></Hero>
+
       {/* Featured Products Section */}
       <section className="container mx-auto py-16 px-4">
         <h2 className="text-3xl font-semibold text-gray-800 text-center mb-8">
@@ -20,11 +49,25 @@ export default function HomePage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Product Card */}
           <ProductCard
-            imageSrc="/products/idea.svg"
-            imageAlt="Product 1"
-            productName="Product 1"
-            productPrice="$99.99"
-            onAddToCart={() => console.log("Added to cart")}
+            imageSrc="/products/greenbean.webp"
+            imageAlt="Green Jelly Bean"
+            productName="Green Bean"
+            productPrice="1157.00"
+            onAddToCart={handleAddToCart}
+          ></ProductCard>
+           <ProductCard
+            imageSrc="/products/pinkbean.jpeg"
+            imageAlt="Green Jelly Bean"
+            productName="Pink Bean"
+            productPrice="29.25"
+            onAddToCart={handleAddToCart}
+          ></ProductCard>
+          <ProductCard
+            imageSrc="/products/grapebean.jpeg"
+            imageAlt="Grape Jelly Bean"
+            productName="Grape Bean"
+            productPrice="2.00"
+            onAddToCart={handleAddToCart}
           ></ProductCard>
           {/* You can duplicate this product card for more products */}
         </div>
