@@ -49,14 +49,14 @@ export default function HomePage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Product Card */}
           <ProductCard
-            imageSrc="/products/greenbean.webp"
+            imageSrc="/products/applebean.jpeg"
             imageAlt="Green Jelly Bean"
             productName="Green Bean"
             productPrice="1157.00"
             onAddToCart={handleAddToCart}
           ></ProductCard>
            <ProductCard
-            imageSrc="/products/pinkbean.jpeg"
+            imageSrc="/products/cherrybean.jpeg"
             imageAlt="Green Jelly Bean"
             productName="Pink Bean"
             productPrice="29.25"
