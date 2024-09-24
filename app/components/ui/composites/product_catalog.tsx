@@ -5,8 +5,7 @@ import ProductCard from "@/app/components/ui/composites/product_card";
 import { ProductModel } from "@/app/components/model/product_model";
 
 async function getProducts() {
-  const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
-  const response = await fetch(`${baseUrl}/api/product/catalog`);
+  const response = await fetch(`/api/product/catalog`);
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
