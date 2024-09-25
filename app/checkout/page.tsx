@@ -4,6 +4,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements, PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { useCartStore } from "@/app/store/cartStore";
 import Link from "next/link";
+import ExpressCheckout from "../components/ui/composites/express-checkout";
 
 // Replace with your Stripe publishable key
 const stripePromise = loadStripe("pk_test_51Q2LrKRvYUHGl0JWwucyC2zfko1jIYU140FhEFfoAx8c8c3jbvyiGyXARWPflwkk142OUPMwE5SwUrzCRPpS6a4i00tl5Jjeyj");
@@ -85,24 +86,17 @@ const CheckoutPage = () => {
       </Link>
       <h1 className="text-3xl font-bold mb-8">Checkout</h1>
       <div className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4">Order Summary</h2>
-        <ul>
-          {items.map((item) => (
-            <li key={item.id} className="flex justify-between mb-2">
-              <span>{item.productName}</span>
-              <span>${item.productPrice.toFixed(2)}</span>
-            </li>
-          ))}
-        </ul>
-        <div className="text-xl font-bold mt-4">
-          Total: ${totalPrice.toFixed(2)}
-        </div>
+        <h2 className="text-2xl font-semibold mb-4">Express Checkout</h2>
+        <ExpressCheckout amount={totalPrice} items={items} />
       </div>
-      {clientSecret && (
-        <Elements stripe={stripePromise} options={{ clientSecret }}>
-          <CheckoutForm />
-        </Elements>
-      )}
+      <div className="mb-8">
+        <h2 className="text-2xl font-semibold mb-4">Standard Checkout</h2>
+        {clientSecret && (
+          <Elements stripe={stripePromise} options={{ clientSecret }}>
+            <CheckoutForm />
+          </Elements>
+        )}
+      </div>
     </div>
   );
 };
