@@ -1,26 +1,13 @@
-import { list } from '@vercel/blob';
 import { NextResponse } from 'next/server';
+import { ProductService } from '@/app/service/product-service';
+import { container } from '@/app/lib/container';
 
 export const revalidate = 3600; // Revalidate every hour
 
 export async function GET(): Promise<NextResponse> {
   try {
-    const { blobs } = await list();
-    
-    // Find the product JSON file
-    const productBlob = blobs.find(blob => blob.pathname === 'product.json');
-    
-    if (!productBlob) {
-      throw new Error('Product catalog file not found');
-    }
-
-    // Fetch the content of the product JSON file
-    const productResponse = await fetch(productBlob.url);
-    if (!productResponse.ok) {
-      throw new Error(`Failed to fetch product data: ${productResponse.statusText}`);
-    }
-
-    const productData = await productResponse.json();
+    const service = container.get(ProductService);
+    const productData = await service.getProducts();
 
     return NextResponse.json(productData);
   } catch (error) {

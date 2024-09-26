@@ -3,20 +3,16 @@
 import { useEffect, useState } from 'react';
 import ProductCard from "@/app/components/ui/composites/product_card";
 import { ProductModel } from "@/app/components/model/product_model";
+import { container } from '@/app/lib/container';
+import { ProductController } from '@/app/controller/product-controller';
 
-async function getProducts() {
-  const response = await fetch(`/api/product/catalog`);
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-  return response.json();
-}
+
 
 export default function ProductCatalog() {
   const [products, setProducts] = useState<ProductModel[]>([]);
-
   useEffect(() => {
-    getProducts().then(setProducts);
+    const productController = container.get<ProductController>(ProductController);
+    productController.getProducts().then(setProducts);
   }, []);
   
   return (

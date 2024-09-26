@@ -7,7 +7,7 @@ import Link from "next/link";
 import ExpressCheckout from "../components/ui/composites/express-checkout";
 
 // Replace with your Stripe publishable key
-const stripePromise = loadStripe("pk_test_51Q2LrKRvYUHGl0JWwucyC2zfko1jIYU140FhEFfoAx8c8c3jbvyiGyXARWPflwkk142OUPMwE5SwUrzCRPpS6a4i00tl5Jjeyj");
+const stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY || '');
 
 const CheckoutForm = () => {
   const stripe = useStripe();
